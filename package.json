@@ -1,19 +1,19 @@
 {
     "name": "zerojs-di",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Factory-Driven Dependency Injection Container",
-    "repository" : { 
-        "type" : "git",
-        "url" : "https://github.com/zerosuxx/zerojs-di.git"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zerosuxx/zerojs-di.git"
     },
     "scripts": {
-        "test": "mocha src/**/*.spec.js"
+        "test": "mocha 'src/**/*.spec.js'"
     },
     "author": "Mohos Tamás",
     "license": "ISC",
     "dependencies": {},
     "devDependencies": {
-      "chai": "^4.1.2",
-      "mocha": "^5.2.0"
+        "chai": "^4.1.2",
+        "mocha": "^5.2.0"
     }
 }

@@ -1,5 +1,5 @@
-var expect = require('chai').expect;
-var Di = require('./di');
+const expect = require('chai').expect;
+const Di = require('./di');
 
 class TestClass {
     constructor() {
@@ -38,12 +38,24 @@ describe('Di', function() {
         });
     });
     
+    describe('has', function() {
+        it('should service exists', function() {
+            expect(di.has('test')).to.be.true;
+        });
+        
+        it('should factory exists', function() {
+            di.setFactory('newFactory', function() {
+            });
+            expect(di.has('newFactory')).to.be.true;
+        });
+    });
+    
     describe('build', function() {
         it('should return TestClass', function() {
             expect(di.build('test')).to.be.instanceOf(TestClass);
         });
         
-        it('should return not same object', function() {
+        it('should return different object', function() {
             expect(di.build('test')).to.be.not.eql(di.build('test'));
         });
         

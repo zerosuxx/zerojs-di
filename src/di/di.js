@@ -14,20 +14,21 @@ module.exports = class Di {
         return this;
     }
 
-    get(name, args) {
+    get(name, args = null) {
         if(!this._serviceInstances[name]) {
             this._serviceInstances[name] = this.build(name, args);
         }
         return this._serviceInstances[name];
     }
     
-    build(name, args) {
-        let service = this.getService(name) || name;
-        return this.getFactory(name).build(this, service, args);
+    build(name, args = null) {
+        const service = this.getService(name) || name;
+        const factory = this.getFactory(name);
+        return factory(this, service, args);
     }
     
     has(name) {
-        return this._factories[name] || this._services[name];
+        return !!this._factories[name] || !!this._services[name];
     }
     
     setService(name, service) {
@@ -49,9 +50,11 @@ module.exports = class Di {
             return this._defaultFactory;
         }
         if(!this._factoryInstances[name]) {
-            const factory = this._factories[name] || name;
-            this._factoryInstances[name] = this._defaultFactory.build(this, factory);
+            const factoryService = this._factories[name] || name;
+            const factoryCreator = this._defaultFactory;
+            this._factoryInstances[name] = factoryCreator(this, factoryService);
         }
         return this._factoryInstances[name];
     }
+
 };

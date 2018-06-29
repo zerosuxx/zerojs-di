@@ -5,4 +5,5 @@ services:
     working_dir: /home/node
     volumes:
       - ./:/home/node
+    command: bash -c "[ -d 'node_modules' ] || npm i && npm t"
 
