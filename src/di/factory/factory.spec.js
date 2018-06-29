@@ -49,7 +49,7 @@ describe('Factory', function() {
         it('should return new object with args', function() {
             const service = TestArgClass;
             const testArgs = [1, 2, 3];
-            const serviceInstance = factory(container, service, testArgs);
+            const serviceInstance = factory(container, service, ...testArgs);
             testArgs.forEach(function(arg) {
                 expect(serviceInstance.getArguments()[arg]).to.be.eql(testArgs[arg]);
             });

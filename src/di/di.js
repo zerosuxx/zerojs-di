@@ -14,14 +14,14 @@ module.exports = class Di {
         return this;
     }
 
-    get(name, args = null) {
+    get(name, ...args) {
         if(!this._serviceInstances[name]) {
             this._serviceInstances[name] = this.build(name, args);
         }
         return this._serviceInstances[name];
     }
     
-    build(name, args = null) {
+    build(name, ...args) {
         const service = this.getService(name) || name;
         const factory = this.getFactory(name);
         return factory(this, service, args);

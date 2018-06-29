@@ -2,7 +2,7 @@ const AbstractFactory = require('./abstract-factory');
 const InstantiableError = require('./instantiable-error');
 
 module.exports = class Factory extends AbstractFactory {
-    __call__(container, className, args = null) {
+    __call__(container, className, ...args) {
         const resolvedClassName = this._resolveClassName(className);
         
         if(typeof resolvedClassName === 'object') {
@@ -12,9 +12,9 @@ module.exports = class Factory extends AbstractFactory {
         return this.build(resolvedClassName, args);
     }
     
-    build(className, args = null) {
+    build(className, args) {
         try {
-            return args ? new className(...args) : new className;
+            return args && args.length ? new className(...args) : new className;
         } catch(ex) {
             throw new InstantiableError(className);
         }

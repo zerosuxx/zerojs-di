@@ -5,7 +5,7 @@ module.exports = class AbstractFactory extends Function {
         return this.bind(this);
     }
     
-    __call__(container, className, args = null) {
+    __call__(container, className, ...args) {
         
     }
     
