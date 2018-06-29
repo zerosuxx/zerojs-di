@@ -8,7 +8,7 @@ module.exports = class Di {
         this._factoryInstances = {};
         this._serviceInstances = {};
     }
-
+    
     set(name, instance) {
         this._serviceInstances[name] = instance;
         return this;

@@ -5,3 +5,15 @@ node_js:
 script:
   - npm test
 
+after_success:
+    - npm install ci-publish
+    - $(npm bin)/ci-publish || true
+deploy:
+  provider: releases
+  api_key: $RELEASE_API_TOKEN
+  file:
+    - "src/**/*"
+  skip_cleanup: true
+  on:
+    repo: zerosuxx/zerojs-di
+    tags: true
