@@ -16,7 +16,7 @@ module.exports = class Di {
 
     get(name, ...args) {
         if(!this._serviceInstances[name]) {
-            this._serviceInstances[name] = this.build(name, args);
+            this._serviceInstances[name] = this.build(name, ...args);
         }
         return this._serviceInstances[name];
     }
@@ -24,7 +24,7 @@ module.exports = class Di {
     build(name, ...args) {
         const service = this.getService(name) || name;
         const factory = this.getFactory(name);
-        return factory(this, service, args);
+        return factory(this, service, ...args);
     }
     
     has(name) {

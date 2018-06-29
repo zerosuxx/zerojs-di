@@ -9,10 +9,10 @@ module.exports = class Factory extends AbstractFactory {
             return Object.assign({}, resolvedClassName);
         }
         
-        return this.build(resolvedClassName, args);
+        return this.build(resolvedClassName, ...args);
     }
     
-    build(className, args) {
+    build(className, ...args) {
         try {
             return args && args.length ? new className(...args) : new className;
         } catch(ex) {
