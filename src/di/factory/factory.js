@@ -7,8 +7,6 @@ module.exports = class Factory extends AbstractFactory {
         
         if(typeof resolvedClassName === 'object') {
             return Object.assign({}, resolvedClassName);
-        } else if(this._isAnonymousFunction(resolvedClassName)) {
-            return resolvedClassName;
         }
         
         return this.build(resolvedClassName, args);
@@ -20,10 +18,5 @@ module.exports = class Factory extends AbstractFactory {
         } catch(ex) {
             throw new InstantiableError(className);
         }
-    }
-    
-    _isAnonymousFunction(service) {
-        const descriptor = Object.getOwnPropertyDescriptor(service, 'prototype');
-        return !!descriptor && !!descriptor.writable;
     }
 };

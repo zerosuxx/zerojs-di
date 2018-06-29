@@ -13,6 +13,14 @@ describe('Di', function() {
     beforeEach(function() {
         di = new Di();
         di.setService('test', TestClass);
+        di.setFactory('testFactory', function() {});
+    });
+
+    describe('set', function() {
+        it('should set up the service', function() {
+            di.set('newService', 'service');
+            expect(di.get('newService')).to.be.equal('service');
+        });
     });
     
     describe('get', function() {
@@ -31,25 +39,6 @@ describe('Di', function() {
         });
     });
     
-    describe('set', function() {
-        it('should set up the service', function() {
-            di.set('newService', 'service');
-            expect(di.get('newService')).to.be.equal('service');
-        });
-    });
-    
-    describe('has', function() {
-        it('should service exists', function() {
-            expect(di.has('test')).to.be.true;
-        });
-        
-        it('should factory exists', function() {
-            di.setFactory('newFactory', function() {
-            });
-            expect(di.has('newFactory')).to.be.true;
-        });
-    });
-    
     describe('build', function() {
         it('should return TestClass', function() {
             expect(di.build('test')).to.be.instanceOf(TestClass);
@@ -63,6 +52,44 @@ describe('Di', function() {
             expect(function() { 
                 di.build('missingService');
             }).to.throw(TypeError);
+        });
+    });
+    
+    describe('has', function() {
+        it('should service exists', function() {
+            expect(di.has('test')).to.be.true;
+        });
+        
+        it('should factory exists', function() {
+            expect(di.has('testFactory')).to.be.true;
+        });
+    });
+    
+    describe('getFactory', function() {
+        it('should return function', function() {
+            expect(di.getFactory('testFactory')).to.be.an('function');
+        });
+        
+        it('should return same anomymous function', function() {
+            const anonymousFunction = function() {};
+            di.setFactory('newAnonymousFactory', anonymousFunction);
+            expect(di.getFactory('newAnonymousFactory')).to.be.eql(anonymousFunction);
+        });
+    });
+    
+    describe('create', function() {
+        it('should return Di instance', function() {
+            expect(Di.create()).to.be.instanceOf(Di);
+        });
+        
+        it('should return Di instance with config', function() {
+            const config = {
+                services: {
+                    'test': TestClass
+                }
+            };
+            const instance = Di.create(config);
+            expect(instance.has('test')).to.be.true;
         });
     });
 });

@@ -39,12 +39,6 @@ describe('Factory', function() {
             expect(testObject).to.be.not.eql(newObject);
         });
         
-        it('should return same anomymous function', function() {
-            const anonymousFunction = function() {};
-            const newObject = factory(container, anonymousFunction);
-            expect(anonymousFunction).to.be.eql(anonymousFunction);
-        });
-        
         it('should return new object', function() {
             const service = TestArgClass;
             const serviceInstance = factory(container, service);

@@ -51,10 +51,25 @@ module.exports = class Di {
         }
         if(!this._factoryInstances[name]) {
             const factoryService = this._factories[name] || name;
-            const factoryCreator = this._defaultFactory;
-            this._factoryInstances[name] = factoryCreator(this, factoryService);
+            this._factoryInstances[name] = this._createFactory(factoryService);
         }
         return this._factoryInstances[name];
+    }
+    
+    _createFactory(factory) {
+        if(this._isAnonymousFunction(factory)) {
+            return factory;
+        }
+        return this._defaultFactory(this, factory);
+    }
+    
+    _isAnonymousFunction(service) {
+        const descriptor = Object.getOwnPropertyDescriptor(service, 'prototype');
+        return !!descriptor && !!descriptor.writable;
+    }
+    
+    static create(config) {
+        return new this(config);
     }
 
 };
