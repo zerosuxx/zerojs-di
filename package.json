@@ -1,8 +1,8 @@
 {
     "name": "zerojs-di",
-    "version": "0.0.71",
+    "version": "0.0.72",
     "description": "Factory-Driven Dependency Injection Container",
-    "main": "src/di/di.js",
+    "main": "./src/di/di.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/zerosuxx/zerojs-di.git"
