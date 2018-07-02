@@ -55,13 +55,18 @@ describe('Di', function() {
         });
     });
     
-    describe('has', function() {
+    describe('has/hasService/hasFactory', function() {
         it('should service exists', function() {
+            di.get('test');
             expect(di.has('test')).to.be.true;
         });
         
+        it('should service exists', function() {
+            expect(di.hasService('test')).to.be.true;
+        });
+        
         it('should factory exists', function() {
-            expect(di.has('testFactory')).to.be.true;
+            expect(di.hasFactory('testFactory')).to.be.true;
         });
     });
     
@@ -89,7 +94,7 @@ describe('Di', function() {
                 }
             };
             const instance = Di.create(config);
-            expect(instance.has('test')).to.be.true;
+            expect(instance.get('test')).to.be.instanceOf(TestClass);
         });
     });
 });

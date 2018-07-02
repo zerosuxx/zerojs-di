@@ -15,7 +15,7 @@ module.exports = class Di {
     }
 
     get(name, ...args) {
-        if(!this._serviceInstances[name]) {
+        if(!this.has(name)) {
             this._serviceInstances[name] = this.build(name, ...args);
         }
         return this._serviceInstances[name];
@@ -28,7 +28,7 @@ module.exports = class Di {
     }
     
     has(name) {
-        return !!this._factories[name] || !!this._services[name];
+        return !!this._serviceInstances[name];
     }
     
     setService(name, service) {
@@ -39,6 +39,10 @@ module.exports = class Di {
     getService(name) {
         return this._services[name];
     }
+    
+    hasService(name) {
+        return !!this._services[name];
+    }
 
     setFactory(name, factory) {
         this._factories[name] = factory;
@@ -46,7 +50,7 @@ module.exports = class Di {
     }
 
     getFactory(name) {
-        if(!this._factories[name]) {
+        if(!this.hasFactory(name)) {
             return this._defaultFactory;
         }
         if(!this._factoryInstances[name]) {
@@ -54,6 +58,10 @@ module.exports = class Di {
             this._factoryInstances[name] = this._createFactory(factoryService);
         }
         return this._factoryInstances[name];
+    }
+    
+    hasFactory(name) {
+        return !!this._factories[name];
     }
     
     _createFactory(factory) {
